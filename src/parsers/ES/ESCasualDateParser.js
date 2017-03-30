@@ -12,18 +12,18 @@ var ParsedResult = require('../../result').ParsedResult;
   - esta mañana -> today in the morning
   - esta tarde -> today in the afternoon/evening
   - esta noche -> tonight
-  - ayer por la mañana -> yesterday in the morning
-  - ayer por la tarde -> yesterday in the afternoon/evening
-  - ayer por la noche -> yesterday at night
-  - mañana por la mañana -> tomorrow in the morning
-  - mañana por la tarde -> tomorrow in the afternoon/evening
-  - mañana por la noche -> tomorrow at night
+  - ayer (por|en) la mañana -> yesterday in the morning
+  - ayer (por|en) la tarde -> yesterday in the afternoon/evening
+  - ayer (por|en) la noche -> yesterday at night
+  - mañana (por|en) la mañana -> tomorrow in the morning
+  - mañana (por|en) la tarde -> tomorrow in the afternoon/evening
+  - mañana (por|en) la noche -> tomorrow at night
   - anoche -> tomorrow at night
   - hoy -> today
   - ayer -> yesterday
   - mañana -> tomorrow
  */
-var PATTERN = /(\W|^)(ahora|esta\s*(mañana|tarde|noche)|(ayer|mañana)\s*por\s*la\s*(mañana|tarde|noche)|hoy|mañana|ayer|anoche)(?=\W|$)/i;
+var PATTERN = /(\W|^)(ahora|(esta|en\sla)\s*(mañana|tarde|noche)|(ayer|mañana)\s*(por|en)\s*la\s*(mañana|tarde|noche)|hoy|mañana|ayer|anoche)(?=\W|$)/i;
 
 exports.Parser = function ESCasualDateParser(){
 

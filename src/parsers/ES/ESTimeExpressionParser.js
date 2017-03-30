@@ -104,15 +104,22 @@ exports.Parser = function ESTimeExpressionParser(){
         if(match[AM_PM_HOUR_GROUP] != null) {
             if(hour > 12) return null;
             var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+
             if(ampm == "a"){
                 meridiem = 0;
                 if(hour == 12) hour = 0;
-            }
-
-            if(ampm == "p"){
+            } 
+            
+             if(ampm == "p"){
+                meridiem = 1;
+                if(hour != 12) hour += 12;
+            } 
+            
+             if(/(noche|tarde)/i.test(match[AM_PM_HOUR_GROUP])){
                 meridiem = 1;
                 if(hour != 12) hour += 12;
             }
+
         }
         result.start.assign('hour', hour);
         result.start.assign('minute', minute);
@@ -196,6 +203,11 @@ exports.Parser = function ESTimeExpressionParser(){
             }
 
             if(match[AM_PM_HOUR_GROUP][0].toLowerCase() == "p"){
+                meridiem = 1;
+                if(hour != 12) hour += 12;
+            }
+
+             if(/(noche|tarde)/i.test(match[AM_PM_HOUR_GROUP])){
                 meridiem = 1;
                 if(hour != 12) hour += 12;
             }

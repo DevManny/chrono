@@ -66,7 +66,7 @@ test("Test - Single Expression", function() {
     }
 
     // Say.."Tomorrow" in the late night (1 AM)
-    var text = "La fecha límite es Tomorrow";
+    var text = "La fecha límite es mañana";
     var results = chrono.casual.parse(text, new Date(2012, 7, 10, 1));
     ok(results.length == 1, JSON.stringify( results ) )
 
@@ -76,7 +76,6 @@ test("Test - Single Expression", function() {
         var expectDate = new Date(2012, 7, 10, 12);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
-
 
     var text = "La fecha límite fue ayer";
     var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
@@ -97,8 +96,7 @@ test("Test - Single Expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
-
-    var text = "La fehca límite fue anoche ";
+    var text = "La fecha límite fue anoche ";
     var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
     ok(results.length == 1, JSON.stringify( results ) )
 
@@ -189,16 +187,34 @@ test("Test - Combined Expression", function() {
 
 test('Test - Random text', function() {
 
-    var text = "esta noche";
+    var text = "en la noche";
     var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
     ok(result.text == text, result.text)
     ok(result.start.get('year') == 2012, JSON.stringify(result.start))
     ok(result.start.get('month') == 1, JSON.stringify(result.start))
     ok(result.start.get('day') == 1, JSON.stringify(result.start))
     ok(result.start.get('hour') == 22, JSON.stringify(result.start))
+    ok(result.start.get('meridiem') == 1, JSON.stringify(result.start))
+
+    var text = "esta noche a las 8 de la noche";
+    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    ok(result.text == text, result.text)
+    ok(result.start.get('hour')  == 20, JSON.stringify(result.start))
+    ok(result.start.get('year')  == 2012, JSON.stringify(result.start))
+    ok(result.start.get('month') == 1, JSON.stringify(result.start))
+    ok(result.start.get('day')   == 1, JSON.stringify(result.start))
     ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start))
 
-    var text = "esta noche 8pm";
+    var text = "esta noche a las 8 de la tarde";
+    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    ok(result.text == text, result.text)
+    ok(result.start.get('hour')  == 20, JSON.stringify(result.start))
+    ok(result.start.get('year')  == 2012, JSON.stringify(result.start))
+    ok(result.start.get('month') == 1, JSON.stringify(result.start))
+    ok(result.start.get('day')   == 1, JSON.stringify(result.start))
+    ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start))
+
+    var text = "esta noche a las 8pm";
     var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
     ok(result.text == text, result.text)
     ok(result.start.get('hour')  == 20, JSON.stringify(result.start))
@@ -208,7 +224,7 @@ test('Test - Random text', function() {
     ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start))
 
 
-    var text = "esta noche at 8"; // TODO
+    var text = "esta noche a las 8 pm"; // TODO
     var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
     ok(result.text == text, result.text)
     ok(result.start.get('hour')  == 20, JSON.stringify(result.start))
